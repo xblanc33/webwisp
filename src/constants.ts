@@ -2,9 +2,6 @@ import { Config } from './domain/config.js'
 // @ts-ignore
 import config from './config.toml'
 
-export function useConfig() {
-    return config as Config
-}
 
 export const REGEX = {
     url: /^https?:\/\/([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}(:\d{1,5})?/i,
