@@ -1,5 +1,5 @@
-import { useConfig } from '../constants'
-import { Action, CalledAction } from '../domain/config'
+import { useConfig } from '../constants.js';
+import { Action, CalledAction } from '../domain/config.js';
 import { readFileSync } from 'fs'
 import OpenAI from 'openai'
 

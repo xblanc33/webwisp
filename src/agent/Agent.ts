@@ -1,8 +1,8 @@
-import { OpenAIService } from '../services/OpenAI.service'
-import { PlaywrightService } from '../services/Playwright.service'
-import { Service } from '../domain/Service'
-import { Runner } from './runner'
-import { Logger } from '../logger'
+import { OpenAIService } from '../services/OpenAI.service.js'
+import { PlaywrightService } from '../services/Playwright.service.js'
+import { Service } from '../domain/Service.js'
+import { Runner } from './runner/Runner.js'
+import { Logger } from '../Logger.js'
 
 export class Agent extends Service {
     private openai!: OpenAIService

@@ -1,7 +1,10 @@
-import { useConfig } from '../constants'
-import { Action, ActionType, CalledAction } from '../domain/config'
+import { useConfig } from '../constants.js';
+import ActionType from '../domain/ActionType.js';
+import { CalledAction } from '../domain/CalledAction.js';
+import { Action } from '../domain/Action.js';
 
-const RAW_ACTION_REGEX = /~~~([^]*)~~~/
+
+const RAW_ACTION_REGEX = /~~~([^]*)~~~/;
 
 export default class CompletionParser {
     public static parseCompletion(completion: string): Completion {
@@ -79,8 +82,8 @@ export default class CompletionParser {
         args: string,
         actionType: ActionType,
         actionInfo: Action
-    ): Record<string, string | number | boolean> {
-        const parsedArgs = {}
+    ): Record<string, string | number | boolean> | undefined {
+        const parsedArgs : Record<string, string | number | boolean> | undefined = undefined;
         if (!actionInfo.arguments) {
             return parsedArgs
         }

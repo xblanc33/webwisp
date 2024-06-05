@@ -1,4 +1,4 @@
-import { Config } from './domain/config'
+import { Config } from './domain/config.js'
 // @ts-ignore
 import config from './config.toml'
 

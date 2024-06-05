@@ -1,21 +1,20 @@
-import { Err, None, Ok, Option, Result, Some } from 'oxide.ts'
 import { Page } from 'playwright'
 
-import { Agent } from '../Agent'
-import { OpenAIService } from '../../services/OpenAI.service'
-import { VisualGrounding } from '../../grounding/Visual.grounding'
-import { PlaywrightService } from '../../services/Playwright.service'
-import { useConfig } from '../../constants'
-import { Logger } from '../../logger'
+import { Agent } from '../Agent.js';
+import { OpenAIService } from '../../services/OpenAI.service.js';
+import { VisualGrounding } from '../../grounding/Visual.grounding.js';
+import { PlaywrightService } from '../../services/Playwright.service.js';
+import { useConfig } from '../../constants.js';
+import { Logger } from '../../Logger.js';
 import {
     ActionType,
     CalledAction,
     CalledActionStatus,
     ImageURL,
     TaskResult,
-} from '../../domain/config'
-import PromptBuilder from '../PromptBuilder'
-import CompletionParser from '../CompletionParser'
+} from '../../domain/config.js';
+import PromptBuilder from '../PromptBuilder.js';
+import CompletionParser from '../CompletionParser.js';
 
 export class Runner {
     private grounding!: VisualGrounding

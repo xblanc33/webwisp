@@ -1,9 +1,9 @@
-import * as env from 'env-var'
-import OpenAI from 'openai'
+import * as env from 'env-var';
+import OpenAI from 'openai';
 
-import { Logger } from '../logger'
-import { Service } from '../domain/Service'
-import { useConfig } from '../constants'
+import { Logger } from '../Logger.js';
+import { Service } from '../domain/Service.js';
+import { useConfig } from '../constants.js';
 
 export class OpenAIService extends Service {
     private client!: OpenAI

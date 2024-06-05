@@ -1,5 +1,7 @@
 import chalk from 'chalk'
-import { ActionType, CalledAction, TaskResult } from './domain/config'
+import ActionType from './domain/ActionType.js';
+import { CalledAction } from './domain/CalledAction.js';
+import { TaskResult } from './domain/TaskResult.js';
 
 export class Logger {
     private static verbose = process.env.NODE_ENV === 'development'

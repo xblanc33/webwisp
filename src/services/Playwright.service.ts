@@ -1,8 +1,8 @@
-import { Browser, BrowserContext, chromium, firefox, Page } from 'playwright'
+import { Browser, BrowserContext, chromium, firefox, Page } from 'playwright';
 
-import { Service } from '../domain/Service'
-import { useConfig } from '../constants'
-import { Logger } from '../logger'
+import { Service } from '../domain/Service.js';
+import { useConfig } from '../constants.js';
+import { Logger } from '../Logger.js';
 
 export class PlaywrightService extends Service {
     private browser!: Browser

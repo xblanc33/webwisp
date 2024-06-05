@@ -1,11 +1,11 @@
-import { ElementHandle } from 'playwright'
-import { None, Option, Some } from 'oxide.ts'
-import fs from 'node:fs'
-import * as path from 'node:path'
+import { ElementHandle } from 'playwright';
+import { None, Option, Some } from 'oxide.ts';
+import fs from 'node:fs';
+import * as path from 'node:path';
 
-import { Grounding } from '../domain/Grounding'
-import { useConfig } from '../constants'
-import { Logger } from '../logger'
+import { Grounding } from '../domain/Grounding.js';
+import { useConfig } from '../constants.js';
+import { Logger } from '../Logger.js';
 
 // @ts-ignore
 import SoMScript from '../../lib/SoM/dist/SoM.min.js'

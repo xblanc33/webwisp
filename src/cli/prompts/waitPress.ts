@@ -1,5 +1,4 @@
 // We want to make an @inquirer/prompts version of the `inquirer-press-to-continue` package
-import chalk from "chalk";
 import { createPrompt, useKeypress, useState, isEnterKey, usePrefix, useEffect, useMemo } from "@inquirer/core";
 import ora from "ora";
 

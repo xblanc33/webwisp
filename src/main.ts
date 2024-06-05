@@ -1,15 +1,15 @@
 #!/usr/bin/env bun
-import meow from 'meow'
-import { input } from '@inquirer/prompts'
-import chalk from 'chalk'
+import meow from 'meow';
+import { input } from '@inquirer/prompts';
+import chalk from 'chalk';
 
-import pkg from '../package.json'
-import { REGEX } from './constants'
-import { Agent } from './agent'
-import { Logger } from './logger'
+import pkg from '../package.json';
+import { REGEX } from './constants.js';
+import { Agent } from './agent/Agent.js';
+import { Logger } from './Logger.js';
 
-import { waitPress } from './cli/prompts'
-import { promptVoice } from './cli/voice'
+import { waitPress } from './cli/prompts/waitPress.js';
+import { promptVoice } from './cli/voice.js';
 
 const cli = meow(
     `
