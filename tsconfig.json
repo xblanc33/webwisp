@@ -11,10 +11,11 @@
         "forceConsistentCasingInFileNames": true,
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
+        "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
         "noEmit": true,
         "outDir": "dist",
     },
-    "include": ["src/main.ts"]
+    "include": ["src/**/*", "types/**/*"],
 }

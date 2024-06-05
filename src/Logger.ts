@@ -1,27 +1,28 @@
-import chalk from 'chalk'
-import ActionType from './domain/ActionType.js';
-import { CalledAction } from './domain/CalledAction.js';
-import { TaskResult } from './domain/TaskResult.js';
+import chalk from 'chalk';
+
+import ActionType from './domain/ActionType.ts';
+import CalledAction from './domain/CalledAction.ts';
+import TaskResult from './domain/TaskResult.ts';
 
 export class Logger {
-    private static verbose = process.env.NODE_ENV === 'development'
+    private static verbose = process.env.NODE_ENV === 'development';
 
     static setVerbose(verbose: boolean) {
-        this.verbose = verbose
+        this.verbose = verbose;
     }
 
     static debug(message: string) {
-        if (!this.verbose) return
+        if (!this.verbose) return;
 
-        console.log(chalk.cyan.bold('DEBUG'), message)
+        console.log(chalk.cyan.bold('DEBUG'), message);
     }
 
     static error(message: string) {
-        console.log(chalk.red.bold('ERROR'), message)
+        console.log(chalk.red.bold('ERROR'), message);
     }
 
     static warn(message: string) {
-        console.log(chalk.yellow.bold('WARN'), message)
+        console.log(chalk.yellow.bold('WARN'), message);
     }
 
     static prompt(title: string, value: string) {
@@ -30,7 +31,7 @@ export class Logger {
             chalk.green('$'),
             chalk.whiteBright.bold(title),
             chalk.reset.cyan(value)
-        )
+        );
     }
 
     static action(
@@ -40,33 +41,33 @@ export class Logger {
         usage?: number
     ) {
         // Use an emote to represent each action kind
-        let emote
+        let emote;
         switch (action.type) {
             case ActionType.Click:
-                emote = '🖱️ '
-                break
+                emote = '🖱️ ';
+                break;
             case ActionType.Type:
-                emote = '🖋️ '
-                break
+                emote = '🖋️ ';
+                break;
             case ActionType.PressEnter:
-                emote = '⌨️ '
-                break
+                emote = '⌨️ ';
+                break;
             case ActionType.Scroll:
-                emote = '📜'
-                break
+                emote = '📜';
+                break;
             case ActionType.Back:
-                emote = '🔙'
-                break
+                emote = '🔙';
+                break;
             case ActionType.Forward:
-                emote = '🔜'
-                break
+                emote = '🔜';
+                break;
             default:
-                emote = '❓'
+                emote = '❓';
         }
 
         // First, output the reasoning if any
         if (reasoning) {
-            console.log(chalk.bold.whiteBright(`🧠?`), chalk.italic(reasoning))
+            console.log(chalk.bold.whiteBright(`🧠?`), chalk.italic(reasoning));
         }
 
         console.log(
@@ -77,7 +78,7 @@ export class Logger {
             duration && chalk.gray.italic(`(${duration}ms)`),
             // Usage
             usage && chalk.gray.italic(`[${usage} tok]`)
-        )
+        );
     }
 
     static taskResult(result: TaskResult) {
@@ -86,12 +87,12 @@ export class Logger {
                 ? chalk.green.bold('Done!')
                 : chalk.red.bold('Failed!'),
             chalk.whiteBright(result.message)
-        )
+        );
         if (result.value) {
             console.log(
                 chalk.whiteBright.bold('Value:'),
                 chalk.cyan(result.value)
-            )
+            );
         }
     }
 }

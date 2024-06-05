@@ -1,15 +1,14 @@
-#!/usr/bin/env bun
 import meow from 'meow';
 import { input } from '@inquirer/prompts';
 import chalk from 'chalk';
 
 import pkg from '../package.json';
-import { REGEX } from './constants.js';
+import { REGEX } from './constants.ts';
 import { Agent } from './agent/Agent.js';
-import { Logger } from './Logger.js';
+import { Logger } from './Logger.ts';
 
-import { waitPress } from './cli/prompts/waitPress.js';
-import { promptVoice } from './cli/voice.js';
+import { waitPress } from './cli/prompts/waitPress.ts';
+import { promptVoice } from './cli/voice.ts';
 
 const cli = meow(
     `
@@ -52,15 +51,15 @@ const cli = meow(
             },
         },
     }
-)
+);
 
 if (cli.flags.version) {
-    console.log(pkg.version)
-    process.exit(0)
+    console.log(pkg.version);
+    process.exit(0);
 }
 
 if (cli.flags.verbose) {
-    Logger.setVerbose(true)
+    Logger.setVerbose(true);
 }
 
 async function promptTarget() {
@@ -73,39 +72,39 @@ async function promptTarget() {
                 input.match(REGEX.ip) ||
                 input.match(REGEX.localhost)
             ) {
-                return true
+                return true;
             }
 
-            return 'Invalid URL, domain name, or IP address'
+            return 'Invalid URL, domain name, or IP address';
         },
         transformer: (input: string) => {
             // If it starts with http or https, return as is
             if (input.match(/^https?:\/\//i)) {
-                return input
+                return input;
             }
 
             if (input.match(REGEX.domain)) {
-                return `https://${input}`
+                return `https://${input}`;
             }
 
-            return `http://${input}`
+            return `http://${input}`;
         },
-    })
+    });
 
     if (target.match(REGEX.url)) {
-        return target
+        return target;
     }
 
     if (target.match(REGEX.domain)) {
-        return `https://${target}`
+        return `https://${target}`;
     }
 
-    return `http://${target}`
+    return `http://${target}`;
 }
 
 async function promptTask() {
     if (cli.flags.voice) {
-        return await promptVoice('Task')
+        return await promptVoice('Task');
     }
 
     return input({
@@ -113,68 +112,68 @@ async function promptTask() {
         validate: (input: string) => {
             // Check that task must have a few words
             if (input.split(' ').length >= 3) {
-                return true
+                return true;
             }
 
-            return 'Task must have at least 3 words'
+            return 'Task must have at least 3 words';
         },
-    })
+    });
 }
 
 function bindSignals(agent: Agent) {
     const terminate = async (code: number = 1) => {
-        await agent.destroy()
-        process.exit(code)
-    }
+        await agent.destroy();
+        process.exit(code);
+    };
 
     process.on('unhandledRejection', (reason, promise) => {
-        Logger.error(`Unhandled Rejection: ${reason}`)
-        terminate()
-    })
+        Logger.error(`Unhandled Rejection: ${reason}`);
+        terminate();
+    });
     process.on('uncaughtException', (error) => {
-        Logger.error(`Uncaught Exception: ${error}`)
-        terminate()
-    })
-    ;['SIGHUP', 'SIGINT', 'SIGKILL', 'SIGQUIT', 'SIGTERM'].forEach((signal) => {
+        Logger.error(`Uncaught Exception: ${error}`);
+        terminate();
+    });
+    ['SIGHUP', 'SIGINT', 'SIGKILL', 'SIGQUIT', 'SIGTERM'].forEach((signal) => {
         process.on(signal, () => {
-            Logger.warn(`Received ${signal}, shutting down`)
-            terminate(0)
-        })
-    })
+            Logger.warn(`Received ${signal}, shutting down`);
+            terminate(0);
+        });
+    });
 }
 
 async function main() {
-    await waitPress({ message: 'Press enter to start the agent' })
+    await waitPress({ message: 'Press enter to start the agent' });
 
-    let target = cli.flags.target
+    let target = cli.flags.target;
     if (!target) {
-        target = await promptTarget()
+        target = await promptTarget();
     } else {
-        Logger.prompt('Target', target)
+        Logger.prompt('Target', target);
     }
 
-    let task = cli.flags.task
+    let task = cli.flags.task;
     if (!task) {
-        task = await promptTask()
+        task = await promptTask();
     } else {
-        Logger.prompt('Task', task)
+        Logger.prompt('Task', task);
     }
 
     // Separate the target and task with a horizontal line
-    const terminalWidth = process.stdout.columns || 80
-    console.log(chalk.gray.bold('—'.repeat(terminalWidth)))
+    const terminalWidth = process.stdout.columns || 80;
+    console.log(chalk.gray.bold('—'.repeat(terminalWidth)));
 
-    const agent = new Agent()
-    bindSignals(agent)
+    const agent = new Agent();
+    bindSignals(agent);
 
-    await agent.initialize()
+    await agent.initialize();
 
-    await waitPress({ message: 'Press enter to start the task' })
+    await waitPress({ message: 'Press enter to start the task' });
 
-    const result = await agent.spawn_task(target, task)
+    const result = await agent.spawn_task(target, task);
 
-    await agent.destroy()
-    Logger.taskResult(result)
+    await agent.destroy();
+    Logger.taskResult(result);
 }
 
-main().catch(console.error)
+main().catch(console.error);

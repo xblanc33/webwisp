@@ -1,1 +1,0 @@
-export { waitPress } from "./waitPress";

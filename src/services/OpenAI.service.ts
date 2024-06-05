@@ -1,15 +1,16 @@
 import * as env from 'env-var';
 import OpenAI from 'openai';
 
-import { Logger } from '../Logger.js';
-import { Service } from '../domain/Service.js';
-import { useConfig } from '../constants.js';
+import { getConfig } from '../domain/Config.ts';
+import { Service } from '../domain/Service.ts';
+
+import { Logger } from '../Logger.ts';
 
 export class OpenAIService extends Service {
-    private client!: OpenAI
+    private client!: OpenAI;
 
     constructor() {
-        super('openai')
+        super('openai');
     }
 
     public static makeClient(): OpenAI {
@@ -17,12 +18,12 @@ export class OpenAIService extends Service {
             apiKey: env.get('OPENAI_API_KEY').required().asString(),
             organization: env.get('OPENAI_ORG').asString(),
             project: env.get('OPENAI_PROJECT').asString(),
-        })
+        });
     }
 
     async initialize(): Promise<void> {
-        Logger.debug('Initializing OpenAI service')
-        this.client = OpenAIService.makeClient()
+        Logger.debug('Initializing OpenAI service');
+        this.client = OpenAIService.makeClient();
     }
 
     async destroy(): Promise<void> {}
@@ -43,13 +44,15 @@ export class OpenAIService extends Service {
         tools?: OpenAI.ChatCompletionTool[],
         tool_choice?: OpenAI.ChatCompletionToolChoiceOption
     ): Promise<OpenAI.ChatCompletion> {
+        const config = getConfig();
+
         return this.client.chat.completions.create({
-            model: useConfig().api.model,
+            model: config.api.model,
             messages,
             tools,
             tool_choice,
-            max_tokens: useConfig().api.max_tokens,
-            temperature: useConfig().fine_tuning.temperature,
-        })
+            max_tokens: config.api.max_tokens,
+            temperature: config.fine_tuning.temperature,
+        });
     }
 }

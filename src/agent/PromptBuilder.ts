@@ -1,37 +1,44 @@
-import { useConfig } from '../constants.js';
-import { CalledAction } from '../domain/CalledAction.js';
-import { Action } from '../domain/Action.js';
-import { readFileSync } from 'fs'
-import OpenAI from 'openai'
+import { readFileSync } from 'fs';
+import OpenAI from 'openai';
+
+import Action from '../domain/Action.ts';
+import ActionType from '../domain/ActionType.js';
+import CalledAction from '../domain/CalledAction.ts';
+import { getConfig } from '../domain/Config.ts';
 
 export default class PromptBuilder {
     public static makeSystem(): OpenAI.ChatCompletionMessageParam[] {
-        const systemPrompt = useConfig().prompts.system
+        const config = getConfig();
 
-        const actions = useConfig().actions
+        const systemPrompt = config.prompts.system;
+
+        const actions = config.actions;
         const actionList = Object.keys(actions)
-            .map((action) => {
-                const info: Action = actions[action]
+            .map((actionStr) => {
+                const action: Action = actions[actionStr as ActionType];
 
-                const args = Object.keys(info.arguments || {})
-                    .map((argName) => {
-                        const arg = (info.arguments || {})[argName]
+                let args = '';
+                if (action.arguments) {
+                    args = action.arguments
+                        .map((argument) => {
+                            return `${argument.required ? '<' : '['}${argument.name};${argument.type}${
+                                argument.enum
+                                    ? `;${argument.enum.join('|')}`
+                                    : ''
+                            }${argument.required ? '>' : ']'}`;
+                        })
+                        .join(' ');
+                }
 
-                        return `${arg.required ? '<' : '['}${arg.name};${arg.type}${
-                            arg.enum ? `;${arg.enum.join('|')}` : ''
-                        }${arg.required ? '>' : ']'}`
-                    })
-                    .join(' ')
-
-                return `- ${action} ${args} : ${info.description}`
+                return `- ${action} ${args} : ${action.description}`;
             })
-            .join('\n')
+            .join('\n');
 
         const examples = (systemPrompt.examples.list || []).map(
             (example): OpenAI.ChatCompletionMessageParam[] => {
                 const screenshotBuf = readFileSync(example.screenshot, {
                     encoding: 'base64',
-                })
+                });
 
                 return [
                     {
@@ -58,9 +65,9 @@ export default class PromptBuilder {
                         name: 'example_assistant',
                         content: example.completion,
                     },
-                ]
+                ];
             }
-        )
+        );
 
         return [
             {
@@ -75,13 +82,13 @@ export default class PromptBuilder {
                         : ''),
             },
             ...examples.flat(),
-        ]
+        ];
     }
 
     public static makeUser(
         args: UserPromptPlaceholders
     ): OpenAI.ChatCompletionMessageParam {
-        const prompt = useConfig()
+        const prompt = getConfig()
             .prompts.user.prompt.replace('{{title}}', args.title)
             .replace('{{url}}', args.url)
             .replace('{{task}}', args.task)
@@ -91,17 +98,17 @@ export default class PromptBuilder {
                     .map((action) => {
                         return `- ${action.type} ${Object.keys(action.arguments)
                             .map((arg) => {
-                                const value = action.arguments[arg]
+                                const value = action.arguments[arg];
                                 return typeof value === 'string'
                                     ? `"${value}"`
-                                    : value
+                                    : value;
                             })
                             .join(' ')} : ${action.description} ${
                             action.status ? `(${action.status})` : ''
-                        }`
+                        }`;
                     })
                     .join('\n')
-            )
+            );
 
         return {
             role: 'user',
@@ -118,14 +125,14 @@ export default class PromptBuilder {
                     },
                 },
             ],
-        }
+        };
     }
 }
 
 export type UserPromptPlaceholders = {
-    title: string
-    url: string
-    task: string
-    previous_actions: CalledAction[]
-    screenshot: `data:image/${string};base64,${string}`
-}
+    title: string;
+    url: string;
+    task: string;
+    previous_actions: CalledAction[];
+    screenshot: `data:image/${string};base64,${string}`;
+};

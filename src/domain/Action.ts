@@ -1,9 +1,11 @@
 export type Action = {
-    description: string
+    description: string;
     arguments?: {
-        name: string
-        type: 'string' | 'number' | 'boolean'
-        enum?: string[]
-        required?: boolean
-    }[]
-}
+        name: string;
+        type: 'string' | 'number' | 'boolean';
+        enum?: string[];
+        required?: boolean;
+    }[];
+};
+
+export default Action;
