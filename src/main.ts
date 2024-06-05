@@ -1,8 +1,5 @@
 import meow from 'meow';
 import { input } from '@inquirer/prompts';
-import chalk from 'chalk';
-
-import pkg from '../package.json' with { type: 'json' };
 
 import { REGEX } from './constants.js';
 import { Agent } from './agent/Agent.js';
@@ -10,6 +7,9 @@ import { Logger } from './Logger.js';
 
 import { waitPress } from './cli/prompts/waitPress.js';
 import { promptVoice } from './cli/voice.js';
+
+import 'dotenv/config'
+
 
 const cli = meow(
     `
@@ -25,7 +25,6 @@ const cli = meow(
 
     Examples
       $ webwisp -V
-      ${pkg.version}
       $ webwisp --target https://example.com --task "Give me the contact email address"
 `,
     {
@@ -55,7 +54,6 @@ const cli = meow(
 );
 
 if (cli.flags.version) {
-    console.log(pkg.version);
     process.exit(0);
 }
 
@@ -162,7 +160,7 @@ async function main() {
 
     // Separate the target and task with a horizontal line
     const terminalWidth = process.stdout.columns || 80;
-    console.log(chalk.gray.bold('—'.repeat(terminalWidth)));
+    console.log('—'.repeat(terminalWidth));
 
     const agent = new Agent();
     bindSignals(agent);

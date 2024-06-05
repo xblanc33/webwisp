@@ -78,6 +78,7 @@ export const getConfig = (): Config => {
 
         return toml.parse(tomlConfigContent);
     } catch (err: unknown) {
+        Logger.error(JSON.stringify(err));
         Logger.error('Failed to read config file');
         process.exit(1);
     }

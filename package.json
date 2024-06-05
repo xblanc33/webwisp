@@ -24,18 +24,16 @@
         "npm": ">=10.5.0"
     },
     "scripts": {
-        "start:bun": "bun pack && dotenvx run -q -- bun ./dist/main.js",
-        "start:node": "npm pack && dotenvx run -q -- node ./dist/main.js",
-        "demo": "bun start:bun -- -t https://www.amazon.fr -k \"Check that it is possible to add a PS5 to the cart and display it\"",
-        "pack": "vite build",
-        "format": "prettier --write ./src/**/*.ts",
-        "compile": "tsc"
+        "compile": "tsc",
+        "build": "node build.js",
+        "start": "node dist/main.js"
     },
     "devDependencies": {
-        "@dotenvx/dotenvx": "^0.44.1",
         "@types/ora": "^3.2.0",
+        "dotenv": "^16.4.5",
+        "esbuild": "^0.21.4",
+        "fs-extra": "^11.2.0",
         "npm": "^10.8.1",
-        "prettier": "^3.2.5",
         "toml": "^3.0.0",
         "ts-node": "^10.9.2",
         "typescript": "^5.4.5"
@@ -43,7 +41,6 @@
     "dependencies": {
         "@inquirer/core": "^8.2.1",
         "@inquirer/prompts": "^5.0.4",
-        "chalk": "^5.3.0",
         "env-var": "^7.4.2",
         "meow": "^13.2.0",
         "node-audiorecorder": "^3.0.0",

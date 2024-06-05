@@ -1,4 +1,4 @@
-import * as env from 'env-var';
+import env from 'env-var';
 import OpenAI from 'openai';
 
 import { getConfig } from '../domain/Config.js';
