@@ -1,10 +1,10 @@
 import { readFileSync } from 'fs';
 import OpenAI from 'openai';
 
-import Action from '../domain/Action.ts';
+import Action from '../domain/Action.js';
 import ActionType from '../domain/ActionType.js';
-import CalledAction from '../domain/CalledAction.ts';
-import { getConfig } from '../domain/Config.ts';
+import CalledAction from '../domain/CalledAction.js';
+import { getConfig } from '../domain/Config.js';
 
 export default class PromptBuilder {
     public static makeSystem(): OpenAI.ChatCompletionMessageParam[] {

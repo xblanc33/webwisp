@@ -1,7 +1,10 @@
+import { Service } from '../domain/Service.js';
+
 import { OpenAIService } from '../services/OpenAI.service.js';
 import { PlaywrightService } from '../services/Playwright.service.js';
-import { Service } from '../domain/Service.js';
+
 import { Runner } from './runner/Runner.js';
+
 import { Logger } from '../Logger.js';
 
 export class Agent extends Service {

@@ -2,10 +2,10 @@ import fs from 'node:fs';
 import { BrowserContextOptions, LaunchOptions } from 'playwright';
 import toml from 'toml';
 
-import ActionType from './ActionType.ts';
-import Action from './Action.ts';
+import ActionType from './ActionType.js';
+import Action from './Action.js';
 
-import { Logger } from '../Logger.ts';
+import { Logger } from '../Logger.js';
 
 export type Config = {
     // Fine-tuning options for the agent

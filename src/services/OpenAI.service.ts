@@ -1,10 +1,10 @@
 import * as env from 'env-var';
 import OpenAI from 'openai';
 
-import { getConfig } from '../domain/Config.ts';
-import { Service } from '../domain/Service.ts';
+import { getConfig } from '../domain/Config.js';
+import { Service } from '../domain/Service.js';
 
-import { Logger } from '../Logger.ts';
+import { Logger } from '../Logger.js';
 
 export class OpenAIService extends Service {
     private client!: OpenAI;

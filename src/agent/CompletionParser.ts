@@ -1,7 +1,7 @@
-import Action from '../domain/Action.ts';
-import ActionType from '../domain/ActionType.ts';
-import CalledAction from '../domain/CalledAction.ts';
-import { getConfig } from '../domain/Config.ts';
+import Action from '../domain/Action.js';
+import ActionType from '../domain/ActionType.js';
+import CalledAction from '../domain/CalledAction.js';
+import { getConfig } from '../domain/Config.js';
 
 const RAW_ACTION_REGEX = /~~~([^]*)~~~/;
 

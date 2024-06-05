@@ -1,20 +1,20 @@
 import { Page } from 'playwright';
 
-import { Agent } from '../Agent.ts';
-import { OpenAIService } from '../../services/OpenAI.service.ts';
-import { VisualGrounding } from '../../grounding/Visual.grounding.ts';
-import { PlaywrightService } from '../../services/Playwright.service.ts';
-import { Logger } from '../../Logger.ts';
+import { Agent } from '../Agent.js';
+import { OpenAIService } from '../../services/OpenAI.service.js';
+import { VisualGrounding } from '../../grounding/Visual.grounding.js';
+import { PlaywrightService } from '../../services/Playwright.service.js';
+import { Logger } from '../../Logger.js';
 
-import ActionType from '../../domain/ActionType.ts';
-import CalledAction from '../../domain/CalledAction.ts';
-import CalledActionStatus from '../../domain/CalledActionStatus.ts';
+import ActionType from '../../domain/ActionType.js';
+import CalledAction from '../../domain/CalledAction.js';
+import CalledActionStatus from '../../domain/CalledActionStatus.js';
 import { getConfig } from '../../domain/Config.js';
-import ImageURL from '../../domain/ImageURL.ts';
-import TaskResult from '../../domain/TaskResult.ts';
+import ImageURL from '../../domain/ImageURL.js';
+import TaskResult from '../../domain/TaskResult.js';
 
-import PromptBuilder from '../PromptBuilder.ts';
-import CompletionParser from '../CompletionParser.ts';
+import PromptBuilder from '../PromptBuilder.js';
+import CompletionParser from '../CompletionParser.js';
 
 export class Runner {
     private grounding!: VisualGrounding;

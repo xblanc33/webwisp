@@ -1,9 +1,9 @@
 import { Browser, BrowserContext, chromium, firefox, Page } from 'playwright';
 
-import { Service } from '../domain/Service.ts';
-import { getConfig } from '../domain/Config.ts';
+import { Service } from '../domain/Service.js';
+import { getConfig } from '../domain/Config.js';
 
-import { Logger } from '../Logger.ts';
+import { Logger } from '../Logger.js';
 
 export class PlaywrightService extends Service {
     private browser!: Browser;

@@ -2,16 +2,14 @@ import { ElementHandle } from 'playwright';
 import fs from 'node:fs';
 import * as path from 'node:path';
 
-// @ts-ignore
-import SoMScript from '../../lib/SoM/dist/SoM.min.ts';
+import { getConfig } from '../domain/Config.js';
+import { Grounding } from '../domain/Grounding.js';
 
-import { getConfig } from '../domain/Config.ts';
-import { Grounding } from '../domain/Grounding.ts';
-
-import { Logger } from '../Logger.ts';
+import { Logger } from '../Logger.js';
 
 export class VisualGrounding extends Grounding {
     public async initialize(): Promise<void> {
+        const SoMScript = fs.readFileSync('lib/SoM/dist/SoM.min.js', 'utf8');
         await this.page.addScriptTag({
             content: `(function() { ${SoMScript} })()`,
         });
